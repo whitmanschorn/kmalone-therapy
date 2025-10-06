@@ -1,11 +1,28 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isResourcesOpen, setIsResourcesOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsResourcesOpen(false);
+      }
+    }
+
+    if (isResourcesOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }
+  }, [isResourcesOpen]);
 
   const navigation = [
     { name: 'Home', href: '/' },
@@ -46,16 +63,16 @@ export default function Header() {
 
             {/* Resources Dropdown */}
             <div
+              ref={dropdownRef}
               className="relative"
-              onMouseEnter={() => setIsResourcesOpen(true)}
-              onMouseLeave={() => setIsResourcesOpen(false)}
             >
               <button
+                onClick={() => setIsResourcesOpen(!isResourcesOpen)}
                 className="text-base font-medium text-gray-700 hover:text-blue-900 transition-colors flex items-center gap-1"
                 aria-expanded={isResourcesOpen}
               >
                 Resources
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                <svg className={`w-4 h-4 transition-transform ${isResourcesOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                 </svg>
               </button>
@@ -65,6 +82,7 @@ export default function Header() {
                   <Link
                     href="/resources"
                     className="block px-4 py-2 text-sm font-semibold text-gray-900 hover:bg-blue-50 transition-colors"
+                    onClick={() => setIsResourcesOpen(false)}
                   >
                     All Articles
                   </Link>
@@ -74,6 +92,7 @@ export default function Header() {
                       key={post.slug}
                       href={`/resources/${post.slug}`}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-900 transition-colors"
+                      onClick={() => setIsResourcesOpen(false)}
                     >
                       {post.shortTitle}
                     </Link>
