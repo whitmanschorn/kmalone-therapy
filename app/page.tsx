@@ -1,6 +1,19 @@
 import Link from "next/link";
+import Image from "next/image";
+import { contentfulClient } from "@/lib/contentful";
+import type { TherapistProfile } from "@/types/contentful";
 
-export default function Home() {
+async function getTherapistProfile() {
+  const entries = await contentfulClient.getEntries<TherapistProfile>({
+    content_type: "therapistProfile",
+    limit: 1,
+  });
+  return entries.items[0] || null;
+}
+
+export default async function Home() {
+  const therapistProfile = await getTherapistProfile();
+
   // TODO: Replace with data from Contentful
   const services = [
     {
@@ -61,11 +74,19 @@ export default function Home() {
               </div>
             </div>
             <div className="relative">
-              <div className="aspect-square rounded-2xl bg-gradient-to-br from-blue-100 to-indigo-100 shadow-xl">
-                {/* Placeholder for therapist photo from Contentful */}
-                <div className="flex items-center justify-center h-full text-gray-400 text-sm">
-                  Photo will be loaded from Contentful
-                </div>
+              <div className="aspect-square rounded-2xl bg-gradient-to-br from-blue-100 to-indigo-100 shadow-xl overflow-hidden">
+                {therapistProfile?.fields.profilePhoto?.fields.file?.url && (
+                  <Image
+                    src={`https:${therapistProfile.fields.profilePhoto.fields.file.url}`}
+                    alt={
+                      therapistProfile.fields.profilePhoto.fields.description ||
+                      therapistProfile.fields.name
+                    }
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                )}
               </div>
             </div>
           </div>
