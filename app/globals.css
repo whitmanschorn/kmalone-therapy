@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #1e293b;
+  --primary: #1e40af;
+  --primary-dark: #1e3a8a;
+  --secondary: #059669;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Therapy-focused calming aesthetics */
+.prose {
+  max-width: 65ch;
+  color: var(--foreground);
+}
+
+.prose h1, .prose h2, .prose h3 {
+  color: var(--primary-dark);
+}
