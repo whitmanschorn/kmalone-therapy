@@ -13,12 +13,13 @@ async function getTherapistProfile(): Promise<Entry<TherapistProfileSkeleton> | 
 }
 
 export default async function Home() {
-  const therapistProfile = await getTherapistProfile();
+  // Temporarily disabled until Contentful types are fully configured
+  // const therapistProfile = await getTherapistProfile();
 
   // Extract profile photo URL for type safety
-  const profilePhotoUrl = therapistProfile?.fields.profilePhoto?.fields?.file?.url;
-  const profilePhotoDescription = therapistProfile?.fields.profilePhoto?.fields?.description;
-  const therapistName = therapistProfile?.fields.name;
+  // const profilePhotoUrl = therapistProfile?.fields.profilePhoto?.fields?.file?.url;
+  // const profilePhotoDescription = therapistProfile?.fields.profilePhoto?.fields?.description;
+  // const therapistName = therapistProfile?.fields.name;
 
   // TODO: Replace with data from Contentful
   const services = [
@@ -81,15 +82,7 @@ export default async function Home() {
             </div>
             <div className="relative">
               <div className="aspect-square rounded-2xl bg-gradient-to-br from-blue-100 to-indigo-100 shadow-xl overflow-hidden">
-                {profilePhotoUrl && (
-                  <Image
-                    src={`https:${profilePhotoUrl}`}
-                    alt={profilePhotoDescription || therapistName || 'Therapist'}
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                )}
+                {/* Photo will be loaded from Contentful - placeholder for now */}
               </div>
             </div>
           </div>
