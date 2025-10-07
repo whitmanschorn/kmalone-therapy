@@ -2,8 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { contentfulClient } from "@/lib/contentful";
 import type { TherapistProfileSkeleton } from "@/types/contentful";
+import type { Entry } from "contentful";
 
-async function getTherapistProfile() {
+async function getTherapistProfile(): Promise<Entry<TherapistProfileSkeleton> | null> {
   const entries = await contentfulClient.getEntries<TherapistProfileSkeleton>({
     content_type: "therapistProfile",
     limit: 1,
