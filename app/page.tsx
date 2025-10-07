@@ -76,11 +76,11 @@ export default async function Home() {
             </div>
             <div className="relative">
               <div className="aspect-square rounded-2xl bg-gradient-to-br from-blue-100 to-indigo-100 shadow-xl overflow-hidden">
-                {therapistProfile?.fields.profilePhoto?.fields.file?.url && (
+                {therapistProfile?.fields.profilePhoto?.fields?.file?.url && (
                   <Image
                     src={`https:${therapistProfile.fields.profilePhoto.fields.file.url}`}
                     alt={
-                      therapistProfile.fields.profilePhoto.fields.description ||
+                      therapistProfile.fields.profilePhoto.fields?.description ||
                       therapistProfile.fields.name
                     }
                     fill
