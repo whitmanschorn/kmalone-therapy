@@ -1,84 +1,74 @@
 # Contentful Webhook Setup for Auto-Deploy
 
-This guide explains how to configure Contentful to automatically trigger GitHub Actions deployments when content is published.
+Since Contentful webhooks don't support custom authentication headers needed for GitHub's API, here are the practical options:
 
-## GitHub Actions Configuration
+## Option 1: Manual Deploy (Current Setup - Simplest)
 
-The workflow in `.github/workflows/deploy.yml` is configured to accept `repository_dispatch` events with the type `contentful-publish`.
+After publishing content in Contentful, trigger a deployment:
 
-## Setting Up the Webhook in Contentful
+```bash
+git commit --allow-empty -m "Deploy latest content" && git push
+```
 
-### 1. Create a GitHub Personal Access Token
+Or use GitHub Actions UI:
+1. Go to https://github.com/whitmanschorn/kmalone-therapy/actions
+2. Select "Deploy to GitHub Pages"
+3. Click "Run workflow"
 
-1. Go to GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
-2. Click "Generate new token (classic)"
-3. Name it: `Contentful Webhook`
-4. Select scope: `repo` (full control of private repositories)
-5. Generate and copy the token - **save it securely, you won't see it again**
+## Option 2: Use Zapier/Make/n8n (Recommended for Auto-Deploy)
 
-### 2. Configure Contentful Webhook
+Use a no-code automation tool as a bridge:
 
-1. Go to Contentful → Settings → Webhooks
-2. Click "Add Webhook"
-3. Configure the webhook:
+### Using Zapier (Free tier available):
+1. Create a Zap with:
+   - **Trigger:** Contentful "Entry Published"
+   - **Action:** GitHub "Trigger Workflow"
+2. Configure the GitHub action to trigger your deployment workflow
 
-   **Name:** `GitHub Actions Deploy`
+### Using Make.com (formerly Integromat):
+Similar setup with Contentful → GitHub workflow trigger
 
-   **URL:**
-   ```
-   https://api.github.com/repos/whitmanschorn/kmalone-therapy/dispatches
-   ```
+## Option 3: Deploy on a Schedule
 
-   **Headers:**
-   - Add header: `Authorization`
-   - Value: `token YOUR_GITHUB_TOKEN_HERE` (replace with your GitHub token)
-   - Add header: `Accept`
-   - Value: `application/vnd.github.v3+json`
+Add scheduled deploys to always show latest content:
 
-   **Content type:** `application/json`
+```yaml
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # Every 6 hours
+```
 
-   **Payload:**
-   ```json
-   {
-     "event_type": "contentful-publish"
-   }
-   ```
+## Option 4: Custom Webhook Server (Advanced)
 
-   **Triggers:**
-   - ☑️ Entry: Publish
-   - ☑️ Entry: Unpublish (optional - if you want unpublish to also rebuild)
-   - ☑️ Asset: Publish
-   - ☑️ Asset: Unpublish (optional)
+Host a simple serverless function (Vercel/Netlify/Cloudflare Workers) that:
+1. Receives Contentful webhook
+2. Calls GitHub API with proper authentication
+3. Triggers the workflow
 
-4. Click "Save"
+Example Vercel serverless function:
+```javascript
+// api/contentful-webhook.js
+export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).end();
 
-### 3. Test the Webhook
+  const response = await fetch(
+    'https://api.github.com/repos/whitmanschorn/kmalone-therapy/dispatches',
+    {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`,
+        'Accept': 'application/vnd.github.v3+json',
+      },
+      body: JSON.stringify({ event_type: 'contentful-publish' })
+    }
+  );
 
-1. In Contentful, edit and publish any entry
-2. Go to GitHub → Actions tab
-3. You should see a new workflow run triggered by "repository_dispatch"
-4. The site will rebuild and redeploy with your updated content
+  res.status(200).json({ success: true });
+}
+```
 
-## How It Works
+Then configure Contentful webhook to: `https://your-domain.vercel.app/api/contentful-webhook`
 
-1. You publish content in Contentful
-2. Contentful webhook sends POST request to GitHub API
-3. GitHub triggers `repository_dispatch` event
-4. Workflow runs: fetches content from Contentful, builds site, deploys to GitHub Pages
-5. Your site is updated with the new content (usually within 2-3 minutes)
+## Current Recommendation
 
-## Troubleshooting
-
-**Webhook not triggering:**
-- Check webhook activity log in Contentful Settings → Webhooks → [Your webhook] → Activity log
-- Verify the GitHub token has `repo` scope
-- Ensure repository name in URL is correct
-
-**Build failing:**
-- Check that Contentful secrets are set in GitHub: Settings → Secrets and variables → Actions
-- Required secrets: `CONTENTFUL_SPACE_ID`, `CONTENTFUL_ACCESS_TOKEN`, `CONTENTFUL_PREVIEW_ACCESS_TOKEN`
-
-**Delayed updates:**
-- GitHub Actions typically take 2-3 minutes to complete
-- GitHub Pages deployment may cache for a few minutes
-- Hard refresh your browser (Cmd+Shift+R or Ctrl+Shift+R)
+For now, use **Option 1** (manual trigger) since it's simple and reliable. When you want automation, **Option 2** (Zapier) is the easiest without coding.
