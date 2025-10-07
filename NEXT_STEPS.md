@@ -48,7 +48,7 @@
 **Content to Create**:
 
 #### Therapist Profile Entry
-- Name: Katherine Malone
+- Name: Kathryn Malone
 - Title: Licensed Clinical Social Worker
 - Credentials: ["LCSW", "Trauma-Informed Therapist"]
 - Bio: [Add professional bio]

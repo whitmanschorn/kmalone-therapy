@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "About - K Malone Therapy",
-  description: "Learn about Katherine Malone, LCSW, and her approach to therapy",
+  description: "Learn about Kathryn Malone, LCSW, and her approach to therapy",
 };
 
 export default function AboutPage() {
@@ -14,7 +14,7 @@ export default function AboutPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-              About Katherine Malone, LCSW
+              About Kathryn Malone, LCSW
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-700">
               Compassionate, evidence-based therapy for healing and growth
@@ -46,7 +46,7 @@ export default function AboutPage() {
                 <div className="prose prose-lg text-gray-600 space-y-4">
                   <p>
                     Thank you for taking the time to learn more about me and my practice.
-                    I'm Katherine Malone, a Licensed Clinical Social Worker dedicated to
+                    I'm Kathryn Malone, a Licensed Clinical Social Worker dedicated to
                     providing compassionate, evidence-based mental health care.
                   </p>
                   <p>
