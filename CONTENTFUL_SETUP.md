@@ -130,13 +130,98 @@ Fields:
 1. Log into your Contentful space
 2. Go to Content Model section
 3. Create each content type listed above with the specified fields
-4. Upload the therapist photos to Media section
+4. Prepare and upload images (see Image Workflow section below)
 5. Create entries for each content type
 6. Get your API credentials:
    - Space ID
    - Content Delivery API access token
    - Content Preview API access token (for preview mode)
 7. Add credentials to `.env.local`
+
+## Image Workflow
+
+### Preparing Images for Upload
+
+This project includes a CLI tool for resizing images before uploading to Contentful. This ensures optimal performance and consistent sizing across the website.
+
+#### Using the Resize Script
+
+The `scripts/resize-image.sh` script uses macOS's built-in `sips` tool to resize images.
+
+**Basic Usage:**
+```bash
+./scripts/resize-image.sh <input-file> <output-file> [width]
+```
+
+**Examples:**
+```bash
+# Resize to specific width (maintains aspect ratio)
+./scripts/resize-image.sh photo.jpg photo-800.jpg 800
+
+# Use predefined sizes
+./scripts/resize-image.sh photo.jpg photo-thumb.jpg thumbnail  # 200px
+./scripts/resize-image.sh photo.jpg photo-med.jpg medium       # 800px
+./scripts/resize-image.sh photo.jpg photo-lg.jpg large         # 1200px
+
+# Just optimize without resizing
+./scripts/resize-image.sh photo.jpg photo-optimized.jpg
+```
+
+**Predefined Sizes:**
+- `thumbnail` or `thumb`: 200px width
+- `medium` or `med`: 800px width
+- `large` or `lg`: 1200px width
+
+#### Recommended Image Sizes
+
+**Profile Photos:**
+- Original/Source: Keep original high-res version
+- Web Display: 800px width (use medium preset)
+- Thumbnail: 200px width (use thumbnail preset)
+
+**Blog Post Featured Images:**
+- Web Display: 1200px width (use large preset)
+- Card Thumbnails: 800px width (use medium preset)
+
+**Service Icons:**
+- Standard Size: 200px width (use thumbnail preset)
+
+#### Uploading to Contentful
+
+**Via Contentful Web App:**
+1. Resize images using the script above
+2. Navigate to Media in your Contentful space
+3. Click "Add asset" → "Upload"
+4. Select your resized image
+5. Add title and description
+6. Click "Publish"
+
+**Via Contentful MCP (Advanced):**
+```bash
+# After resizing your image with the script
+# Use base64 encoding to upload
+base64 -i photo-800.jpg | pbcopy
+# Then use Contentful MCP upload_asset tool
+```
+
+**Important Notes:**
+- Always publish assets after uploading or they won't appear in the app
+- Use descriptive titles and alt text for accessibility
+- The asset URL format is: `https://images.ctfassets.net/[space-id]/...`
+- Images are automatically served via Contentful's CDN
+
+#### Troubleshooting
+
+**Asset shows "Invalid URI host" error:**
+- The asset upload may not have completed properly
+- Try re-uploading the asset through the Contentful web interface
+- Ensure the asset is published after upload
+
+**Image not displaying on website:**
+- Check that the asset is published in Contentful
+- Verify the entry referencing the asset is also published
+- Confirm `next.config.ts` includes Contentful domains in `remotePatterns`
+- Check browser console for any CORS or loading errors
 
 ## Initial Content to Create
 
