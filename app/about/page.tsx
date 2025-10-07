@@ -1,12 +1,41 @@
 import type { Metadata } from "next";
+import Image from "next/image";
+import { contentfulClient } from "@/lib/contentful";
+import type { TherapistProfileSkeleton } from "@/types/contentful";
+import type { Entry } from "contentful";
 
 export const metadata: Metadata = {
-  title: "About - K Malone Therapy",
-  description: "Learn about Kathryn Malone, LCSW, and her approach to therapy",
+  title: "About - Kathryn Malone Therapy",
+  description: "Learn about Kathryn Malone, LPC, and her holistic approach to therapy",
 };
 
-export default function AboutPage() {
-  // TODO: Replace with data from Contentful
+async function getTherapistProfile(): Promise<Entry<TherapistProfileSkeleton>> {
+  const entries = await contentfulClient.getEntries<TherapistProfileSkeleton>({
+    content_type: "therapistProfile",
+    limit: 1,
+  });
+
+  const profile = entries.items[0];
+
+  if (!profile) {
+    throw new Error(
+      "Therapist profile not found in Contentful. Please create a therapistProfile entry before building."
+    );
+  }
+
+  return profile;
+}
+
+export default async function AboutPage() {
+  const therapistProfile = await getTherapistProfile();
+
+  // Access profile photo - type assertion needed due to Contentful SDK limitations
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const profilePhoto = therapistProfile.fields.profilePhoto as any;
+  const profilePhotoUrl = profilePhoto?.fields?.file?.url;
+  const profilePhotoDescription = profilePhoto?.fields?.description;
+  const therapistName = therapistProfile.fields.name;
+
   return (
     <div className="bg-white">
       {/* Hero Section */}
@@ -14,10 +43,10 @@ export default function AboutPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-              About Kathryn Malone, LCSW
+              About Kathryn Malone, LPC
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-700">
-              Compassionate, evidence-based therapy for healing and growth
+              A holistic approach to healing, honoring mind, body, and soul
             </p>
           </div>
         </div>
@@ -29,11 +58,19 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Photo Column */}
             <div className="lg:col-span-1">
-              <div className="aspect-square rounded-2xl bg-gradient-to-br from-blue-100 to-indigo-100 shadow-lg sticky top-24">
-                {/* Placeholder for therapist photo from Contentful */}
-                <div className="flex items-center justify-center h-full text-gray-400 text-sm p-4 text-center">
-                  Professional photo will be loaded from Contentful
-                </div>
+              <div className="aspect-square rounded-2xl bg-gradient-to-br from-blue-100 to-indigo-100 shadow-lg sticky top-24 overflow-hidden">
+                {profilePhotoUrl ? (
+                  <Image
+                    src={`https:${profilePhotoUrl}`}
+                    alt={profilePhotoDescription || `${therapistName} - Professional headshot`}
+                    fill
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className="flex items-center justify-center h-full text-gray-400 text-sm p-4 text-center">
+                    Professional photo will be loaded from Contentful
+                  </div>
+                )}
               </div>
             </div>
 
@@ -41,19 +78,19 @@ export default function AboutPage() {
             <div className="lg:col-span-2 space-y-8">
               <div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                  Welcome
+                  My Philosophy
                 </h2>
                 <div className="prose prose-lg text-gray-600 space-y-4">
                   <p>
-                    Thank you for taking the time to learn more about me and my practice.
-                    I'm Kathryn Malone, a Licensed Clinical Social Worker dedicated to
-                    providing compassionate, evidence-based mental health care.
+                    I believe that every person is inherently worthy, has a valuable mission, and
+                    deserves to be seen and understood in the uniqueness of one's life story. Therapy
+                    provides a space of safety and unconditional acceptance which allows a person to
+                    show up fully, more able to explore one's vulnerabilities and the deepest parts
+                    of oneself.
                   </p>
                   <p>
-                    I believe that seeking therapy is an act of courage, and I'm honored
-                    to support individuals on their journey toward healing and personal growth.
-                    My approach is collaborative, trauma-informed, and tailored to meet each
-                    client's unique needs and goals.
+                    I believe it is through relationships that we come to know ourselves and learn
+                    how to strengthen our connections with those we love.
                   </p>
                 </div>
               </div>
@@ -64,9 +101,16 @@ export default function AboutPage() {
                 </h2>
                 <div className="prose prose-lg text-gray-600 space-y-4">
                   <p>
-                    With extensive training and experience in clinical social work, I specialize
-                    in working with adults facing a range of challenges including anxiety, depression,
-                    trauma, and major life transitions.
+                    Upon discovering my love for Psychology, Neuroscience and Mental Health advocacy
+                    while at Oberlin College, I later went on to earn my Master's in Counseling at
+                    Texas State in 2022.
+                  </p>
+                  <p>
+                    I work with kids, teens, adults, couples, non-monogamous relationships, LGBTQ+
+                    individuals, and parents. I have experience supporting clients through anxiety,
+                    depression, gender identity and expression, grief and loss, life transitions,
+                    marriage and family issues, PTSD and trauma, self-esteem, self-harm, and
+                    substance use.
                   </p>
                 </div>
               </div>
@@ -78,15 +122,15 @@ export default function AboutPage() {
                 <ul className="space-y-3 text-gray-600">
                   <li className="flex items-start">
                     <span className="text-blue-900 mr-2">✓</span>
-                    <span>Licensed Clinical Social Worker (LCSW)</span>
+                    <span>Licensed Professional Counselor (LPC)</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-blue-900 mr-2">✓</span>
-                    <span>Trauma-Informed Care Specialist</span>
+                    <span>Master's in Counseling, Texas State University (2022)</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-blue-900 mr-2">✓</span>
-                    <span>Master of Social Work (MSW)</span>
+                    <span>B.A. in Psychology & Neuroscience, Oberlin College</span>
                   </li>
                   {/* More credentials will be loaded from Contentful */}
                 </ul>
@@ -98,14 +142,15 @@ export default function AboutPage() {
                 </h2>
                 <div className="prose prose-lg text-gray-600 space-y-4">
                   <p>
-                    I integrate various therapeutic modalities to create a personalized treatment
-                    approach for each client. My work is grounded in cognitive-behavioral therapy (CBT),
-                    mindfulness-based interventions, and trauma-informed practices.
+                    I come to therapy with a holistic approach that centers the balance of mind, body,
+                    and soul. I enjoy bringing in my wide variety of interests in different healing
+                    modalities, from spiritual perspectives, to mindfulness- and somatic-based practices
+                    such as meditation, movement and dance, along with expressive arts, sound and music
+                    healing, and tea ceremony.
                   </p>
                   <p>
-                    I strive to create a warm, non-judgmental space where you can feel safe to
-                    explore your thoughts, emotions, and experiences. Together, we'll work toward
-                    your goals at a pace that feels comfortable for you.
+                    I look forward to being your companion as we walk along this beautiful, hard, and
+                    often messy path of healing and discovery.
                   </p>
                 </div>
               </div>

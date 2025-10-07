@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Resources - K Malone Therapy",
+  title: "Resources - Kathryn Malone Therapy",
   description: "Helpful articles and resources about mental health, therapy, and wellness",
 };
 

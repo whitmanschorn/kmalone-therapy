@@ -10,12 +10,12 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "K Malone Therapy - Licensed Clinical Social Worker",
+  title: "Kathryn Malone Therapy - Licensed Professional Counselor",
   description: "Professional mental health therapy services in a compassionate, supportive environment. Specializing in anxiety, depression, trauma, and life transitions.",
-  keywords: ["therapy", "mental health", "LCSW", "counseling", "anxiety", "depression", "trauma"],
-  authors: [{ name: "Kathryn Malone, LCSW" }],
+  keywords: ["therapy", "mental health", "LPC", "counseling", "anxiety", "depression", "trauma"],
+  authors: [{ name: "Kathryn Malone, LPC" }],
   openGraph: {
-    title: "K Malone Therapy",
+    title: "Kathryn Malone Therapy",
     description: "Professional mental health therapy services",
     type: "website",
   },

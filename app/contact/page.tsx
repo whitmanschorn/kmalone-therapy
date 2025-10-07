@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact - K Malone Therapy",
+  title: "Contact - Kathryn Malone Therapy",
   description: "Get in touch to schedule a consultation or ask questions about therapy services",
 };
 

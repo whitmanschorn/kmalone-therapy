@@ -1,4 +1,4 @@
-# K Malone Therapy Website
+# Kathryn Malone Therapy Website
 
 A modern, professional therapy practice website built with Next.js 15, Tailwind CSS, and Contentful CMS. Deployed to GitHub Pages with custom domain support.
 
@@ -259,7 +259,7 @@ export async function getServices() {
 
 ## 📄 License
 
-This project is private and proprietary to K Malone Therapy.
+This project is private and proprietary to Kathryn Malone Therapy.
 
 ## 🤝 Support
 
@@ -271,7 +271,7 @@ For technical issues or questions:
 
 ## 📞 Contact
 
-**K Malone Therapy**
+**Kathryn Malone Therapy**
 - Website: https://kmalonetherapy.com
 - Email: contact@kmalonetherapy.com
 - Phone: (555) 123-4567

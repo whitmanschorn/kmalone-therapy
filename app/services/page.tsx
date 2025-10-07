@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Services - K Malone Therapy",
-  description: "Comprehensive therapy services including individual therapy, trauma therapy, anxiety and depression treatment, and more",
+  title: "Services - Kathryn Malone Therapy",
+  description: "Holistic therapy services for kids, teens, adults, couples, and LGBTQ+ individuals. Supporting anxiety, depression, trauma, life transitions, and more.",
 };
 
 export default function ServicesPage() {
@@ -13,73 +13,73 @@ export default function ServicesPage() {
       id: 1,
       name: "Individual Therapy",
       slug: "individual-therapy",
-      description: "One-on-one therapeutic sessions tailored to your unique needs and goals",
+      description: "Support for kids, teens, and adults navigating life's challenges",
       detailedDescription: `Individual therapy provides a safe, confidential space to explore your thoughts,
-        feelings, and behaviors. We'll work together to identify patterns, develop coping strategies,
-        and create meaningful change in your life. Sessions are tailored to your specific needs and goals.`,
+        feelings, and experiences. Using a holistic approach that honors mind, body, and soul, we'll work
+        together to address anxiety, depression, self-esteem, life transitions, and personal growth.`,
       duration: "50 minutes",
       price: "$150 per session",
       icon: "👤",
     },
     {
       id: 2,
-      name: "Trauma Therapy",
+      name: "Couples & Relationship Therapy",
+      slug: "couples-therapy",
+      description: "Support for couples and non-monogamous relationships",
+      detailedDescription: `I work with couples and non-monogamous relationships to strengthen connections,
+        improve communication, and navigate challenges together. Whether you're facing conflict, trust issues,
+        or simply want to deepen your connection, therapy can help you build healthier relationship dynamics.`,
+      duration: "50 minutes",
+      price: "$150 per session",
+      icon: "💞",
+    },
+    {
+      id: 3,
+      name: "LGBTQ+ Affirming Therapy",
+      slug: "lgbtq-therapy",
+      description: "Affirming support for LGBTQ+ individuals and gender identity exploration",
+      detailedDescription: `I provide affirming, knowledgeable support for LGBTQ+ individuals navigating
+        gender identity and expression, coming out, relationship challenges, and mental health concerns.
+        You deserve to be seen and understood in the uniqueness of your life story.`,
+      duration: "50 minutes",
+      price: "$150 per session",
+      icon: "🌈",
+    },
+    {
+      id: 4,
+      name: "Trauma & PTSD Support",
       slug: "trauma-therapy",
-      description: "Evidence-based approaches to healing from traumatic experiences",
-      detailedDescription: `Using trauma-informed, evidence-based approaches, I help clients process and
-        heal from traumatic experiences. We'll work at your pace to address the impact of trauma while
-        building resilience and reclaiming your sense of safety and empowerment.`,
+      description: "Compassionate healing from traumatic experiences and PTSD",
+      detailedDescription: `Using trauma-informed, somatic-based approaches, I help clients process and
+        heal from traumatic experiences. We'll work at your pace using mindfulness, movement, and other
+        holistic modalities to address the impact of trauma while building resilience and safety.`,
       duration: "50 minutes",
       price: "$150 per session",
       icon: "🌱",
     },
     {
-      id: 3,
-      name: "Anxiety & Depression Treatment",
-      slug: "anxiety-depression",
-      description: "Support for managing anxiety, depression, and mood-related challenges",
-      detailedDescription: `Whether you're experiencing persistent worry, panic attacks, low mood, or loss
-        of interest in activities, I can help. Using evidence-based approaches like CBT and mindfulness,
-        we'll develop strategies to manage symptoms and improve your quality of life.`,
-      duration: "50 minutes",
-      price: "$150 per session",
-      icon: "💙",
-    },
-    {
-      id: 4,
-      name: "Life Transitions",
-      slug: "life-transitions",
-      description: "Navigate major life changes with guidance and support",
-      detailedDescription: `Major life changes—career shifts, relationship changes, loss, or identity
-        transitions—can be overwhelming. Therapy can provide support and guidance as you navigate these
-        changes, helping you find clarity and build resilience during times of uncertainty.`,
-      duration: "50 minutes",
-      price: "$150 per session",
-      icon: "🌟",
-    },
-    {
       id: 5,
-      name: "Stress Management",
-      slug: "stress-management",
-      description: "Develop healthy coping strategies for managing stress",
-      detailedDescription: `Learn practical skills and techniques to manage stress effectively. We'll explore
-        mindfulness, relaxation techniques, boundary-setting, and time management strategies to help you
-        create a more balanced, sustainable lifestyle.`,
+      name: "Grief & Loss Counseling",
+      slug: "grief-loss",
+      description: "Support through grief, loss, and life transitions",
+      detailedDescription: `Whether you're experiencing the loss of a loved one, a relationship ending, or
+        another significant life transition, I offer compassionate support as you navigate grief and find
+        meaning in your experience. Healing is not linear, and I'll walk alongside you on this path.`,
       duration: "50 minutes",
       price: "$150 per session",
-      icon: "🧘",
+      icon: "🕊️",
     },
     {
       id: 6,
-      name: "Relationship Issues",
-      slug: "relationship-issues",
-      description: "Work through challenges in personal and professional relationships",
-      detailedDescription: `Explore patterns in your relationships, improve communication skills, and develop
-        healthier relationship dynamics. Whether you're dealing with family conflict, friendship challenges,
-        or workplace relationships, therapy can help you build stronger connections.`,
+      name: "Self-Harm & Substance Use Support",
+      slug: "self-harm-substance",
+      description: "Compassionate support for self-harm and substance use challenges",
+      detailedDescription: `I provide non-judgmental support for individuals struggling with self-harm
+        and substance use. Together, we'll explore underlying emotions, develop healthier coping strategies,
+        and work toward healing and recovery at your own pace.`,
       duration: "50 minutes",
       price: "$150 per session",
-      icon: "💞",
+      icon: "🤝",
     },
   ];
 
