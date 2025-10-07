@@ -4,21 +4,46 @@ import { contentfulClient } from "@/lib/contentful";
 import type { TherapistProfileSkeleton } from "@/types/contentful";
 import type { Entry } from "contentful";
 
-async function getTherapistProfile(): Promise<Entry<TherapistProfileSkeleton> | null> {
+async function getTherapistProfile(): Promise<Entry<TherapistProfileSkeleton>> {
   const entries = await contentfulClient.getEntries<TherapistProfileSkeleton>({
     content_type: "therapistProfile",
     limit: 1,
   });
-  return entries.items[0] || null;
+
+  const profile = entries.items[0];
+
+  if (!profile) {
+    throw new Error(
+      "Therapist profile not found in Contentful. Please create a therapistProfile entry before building."
+    );
+  }
+
+  // Validate profile photo exists
+  if (!profile.fields.profilePhoto) {
+    throw new Error(
+      "Profile photo is required. Please add a profilePhoto to the therapistProfile entry in Contentful."
+    );
+  }
+
+  return profile;
 }
 
 export default async function Home() {
   const therapistProfile = await getTherapistProfile();
 
-  // Extract profile photo URL for type safety
-  const profilePhotoUrl = therapistProfile?.fields.profilePhoto?.fields?.file?.url;
-  const profilePhotoDescription = therapistProfile?.fields.profilePhoto?.fields?.description;
-  const therapistName = therapistProfile?.fields.name;
+  // Access profile photo - type assertion needed due to Contentful SDK limitations
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const profilePhoto = therapistProfile.fields.profilePhoto as any;
+  const profilePhotoUrl = profilePhoto?.fields?.file?.url;
+  const profilePhotoDescription = profilePhoto?.fields?.description;
+  const therapistName = therapistProfile.fields.name;
+
+  // Additional runtime validation
+  if (!profilePhotoUrl) {
+    throw new Error(
+      "Profile photo URL not found. Please ensure the asset is properly uploaded and published in Contentful."
+    );
+  }
 
   // TODO: Replace with data from Contentful
   const services = [
@@ -81,19 +106,13 @@ export default async function Home() {
             </div>
             <div className="relative">
               <div className="aspect-square rounded-2xl bg-gradient-to-br from-blue-100 to-indigo-100 shadow-xl overflow-hidden">
-                {profilePhotoUrl ? (
-                  <Image
-                    src={`https:${profilePhotoUrl}`}
-                    alt={profilePhotoDescription || `${therapistName} - Professional headshot`}
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-gray-400">
-                    {/* Placeholder when photo is not available */}
-                  </div>
-                )}
+                <Image
+                  src={`https:${profilePhotoUrl}`}
+                  alt={profilePhotoDescription || `${therapistName} - Professional headshot`}
+                  fill
+                  className="object-cover"
+                  priority
+                />
               </div>
             </div>
           </div>
