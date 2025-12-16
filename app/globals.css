@@ -2,16 +2,19 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #1e293b;
-  --primary: #1e40af;
-  --primary-dark: #1e3a8a;
-  --secondary: #059669;
+  --foreground: #3d3d3d;
+  --primary: #C45B4C;
+  --primary-dark: #A34838;
+  --primary-light: #E8D5CF;
+  --secondary: #7D8B6E;
+  --secondary-dark: #5C6B4D;
+  --secondary-light: #E8EDE3;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
+  --font-sans: var(--font-lato);
 }
 
 body {
@@ -24,7 +27,80 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Therapy-focused calming aesthetics */
+/* ========================================
+   ANIMATIONS - Elegant fade-in effects
+   ======================================== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes gentlePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.7s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-delay-100 { animation-delay: 0.1s; }
+.animate-delay-200 { animation-delay: 0.2s; }
+.animate-delay-300 { animation-delay: 0.3s; }
+.animate-delay-400 { animation-delay: 0.4s; }
+
+/* Initially hidden for animation */
+.animate-on-scroll {
+  opacity: 0;
+}
+
+.animate-on-scroll.is-visible {
+  animation: fadeInUp 0.7s ease-out forwards;
+}
+
+/* ========================================
+   ENHANCED TRANSITIONS
+   ======================================== */
+
+/* Smoother hover transitions globally */
+a, button {
+  transition: all 0.3s ease;
+}
+
+/* Soft shadow utilities */
+.shadow-soft {
+  box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.08);
+}
+
+.shadow-soft-lg {
+  box-shadow: 0 8px 30px -6px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover glow effect */
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(196, 91, 76, 0.15);
+}
+
+/* ========================================
+   TYPOGRAPHY & PROSE
+   ======================================== */
+
 .prose {
   max-width: 65ch;
   color: var(--foreground);
@@ -32,4 +108,32 @@ html {
 
 .prose h1, .prose h2, .prose h3 {
   color: var(--primary-dark);
+}
+
+/* Elegant letter spacing for headings */
+h1, h2, h3 {
+  letter-spacing: -0.02em;
+}
+
+/* ========================================
+   DECORATIVE ELEMENTS
+   ======================================== */
+
+/* Organic blob shape for decorative use */
+.blob-shape {
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+}
+
+/* Subtle texture overlay */
+.texture-overlay {
+  position: relative;
+}
+
+.texture-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.015;
+  pointer-events: none;
 }

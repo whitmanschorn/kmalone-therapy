@@ -1,3 +1,10 @@
+import { redirect } from "next/navigation";
+
+export default function AboutPage() {
+  redirect("/");
+}
+
+/* COMMENTED OUT - Original about page with full bio
 import type { Metadata } from "next";
 import Image from "next/image";
 import { contentfulClient } from "@/lib/contentful";
@@ -38,7 +45,6 @@ export default async function AboutPage() {
 
   return (
     <div className="bg-white">
-      {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-50 to-indigo-50 py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
@@ -52,11 +58,9 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {/* Main Content */}
       <section className="py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Photo Column */}
             <div className="lg:col-span-1">
               <div className="aspect-square rounded-2xl bg-gradient-to-br from-blue-100 to-indigo-100 shadow-lg sticky top-24 overflow-hidden">
                 {profilePhotoUrl ? (
@@ -74,7 +78,6 @@ export default async function AboutPage() {
               </div>
             </div>
 
-            {/* Content Column */}
             <div className="lg:col-span-2 space-y-8">
               <div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">
@@ -132,7 +135,6 @@ export default async function AboutPage() {
                     <span className="text-blue-900 mr-2">✓</span>
                     <span>B.A. in Psychology & Neuroscience, Oberlin College</span>
                   </li>
-                  {/* More credentials will be loaded from Contentful */}
                 </ul>
               </div>
 
@@ -176,3 +178,4 @@ export default async function AboutPage() {
     </div>
   );
 }
+*/

@@ -1,3 +1,43 @@
+import Link from 'next/link';
+import { contentfulClient } from '@/lib/contentful';
+import type { SiteSettingsSkeleton } from '@/types/contentful';
+
+async function getSiteSettings() {
+  const entries = await contentfulClient.getEntries<SiteSettingsSkeleton>({
+    content_type: 'siteSettings',
+    limit: 1,
+  });
+  return entries.items[0];
+}
+
+export default async function Header() {
+  const siteSettings = await getSiteSettings();
+  const siteName = siteSettings?.fields.siteName || 'Kathryn Malone Therapy';
+
+  return (
+    <header className="bg-white/80 backdrop-blur-md border-b border-[#E8EDE3]/60 sticky top-0 z-50">
+      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Top">
+        <div className="flex w-full items-center justify-between py-4">
+          <Link href="/" className="text-2xl font-bold text-[#A34838] hover:text-[#C45B4C] flex items-center gap-2">
+            {/* Decorative leaf accent */}
+            <svg className="w-6 h-6 text-[#7D8B6E]" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z"/>
+            </svg>
+            {siteName}
+          </Link>
+          <Link
+            href="#contact"
+            className="text-sm font-medium text-[#5C6B4D] hover:text-white px-5 py-2.5 rounded-full bg-[#E8EDE3] hover:bg-[#7D8B6E] shadow-soft hover-glow transition-all duration-300"
+          >
+            Get in Touch
+          </Link>
+        </div>
+      </nav>
+    </header>
+  );
+}
+
+/* COMMENTED OUT - Original navigation header
 'use client';
 
 import Link from 'next/link';
@@ -49,7 +89,6 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Desktop navigation */}
           <div className="hidden md:flex md:items-center md:space-x-8">
             {navigation.map((item) => (
               <Link
@@ -61,7 +100,6 @@ export default function Header() {
               </Link>
             ))}
 
-            {/* Resources Dropdown */}
             <div
               ref={dropdownRef}
               className="relative"
@@ -109,7 +147,6 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Mobile menu button */}
           <div className="flex md:hidden">
             <button
               type="button"
@@ -135,7 +172,6 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Mobile menu */}
         {isMenuOpen && (
           <div className="md:hidden pb-4">
             <div className="flex flex-col space-y-4">
@@ -150,7 +186,6 @@ export default function Header() {
                 </Link>
               ))}
 
-              {/* Mobile Resources Section */}
               <div>
                 <button
                   onClick={() => setIsResourcesOpen(!isResourcesOpen)}
@@ -204,3 +239,4 @@ export default function Header() {
     </header>
   );
 }
+*/

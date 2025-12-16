@@ -67,6 +67,7 @@ export interface SiteSettingsFields {
     instagram?: string;
     linkedin?: string;
   };
+  schedulingMessage?: string;
 }
 
 export interface SiteSettingsSkeleton extends EntrySkeletonType {

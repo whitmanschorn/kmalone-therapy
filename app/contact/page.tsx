@@ -1,3 +1,10 @@
+import { redirect } from "next/navigation";
+
+export default function ContactPage() {
+  redirect("/");
+}
+
+/* COMMENTED OUT - Original contact page with full contact info and scheduling
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -8,7 +15,6 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <div className="bg-white">
-      {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-50 to-indigo-50 py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
@@ -22,11 +28,9 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Contact Content */}
       <section className="py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Contact Information */}
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-6">
                 Contact Information
@@ -103,7 +107,6 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Schedule Section */}
             <div>
               <div id="schedule" className="scroll-mt-24">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">
@@ -123,7 +126,6 @@ export default function ContactPage() {
                     </p>
                   </div>
 
-                  {/* Placeholder for Google Calendar scheduling */}
                   <div className="bg-white rounded-lg p-6 text-center">
                     <p className="text-gray-600 mb-4">
                       Click below to view available appointment times:
@@ -176,7 +178,6 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Crisis Resources */}
       <section className="py-12 bg-red-50 border-t border-red-100">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
@@ -206,3 +207,4 @@ export default function ContactPage() {
     </div>
   );
 }
+*/

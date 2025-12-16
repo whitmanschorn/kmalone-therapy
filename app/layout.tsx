@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Lato } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-const inter = Inter({
+const lato = Lato({
   subsets: ["latin"],
-  variable: "--font-inter",
+  weight: ["300", "400", "700"],
+  variable: "--font-lato",
 });
 
 export const metadata: Metadata = {
@@ -28,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body className={`${lato.variable} font-sans antialiased`}>
         <div className="flex flex-col min-h-screen">
           <Header />
           <main className="flex-grow">
